@@ -3,7 +3,7 @@ FROM node:18-alpine
 # Werkmap instellen
 WORKDIR /app
 
-# Kopieer afhankelijkheden
+# Kopieer dependencies bestanden
 COPY package.json package-lock.json* ./
 
 # Installeer dependencies
@@ -12,7 +12,7 @@ RUN npm install
 # Kopieer applicatiecode
 COPY . .
 
-# Poort 5001 exposeren
+# Poort 5001 exoosen
 EXPOSE 5001
 
 # Start server

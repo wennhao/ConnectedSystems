@@ -51,9 +51,7 @@ const obstacles = [
     {x: 8, y: 6}, {x: 8, y: 7}, {x: 8, y: 8}
 ];
 
-/** 
- * Logging to console with timestamp
- */
+// Logging to console with timestamp
 function log(level, message, data = null) {
     const timestamp = new Date().toISOString();
     const logMessage = `${timestamp} - ${level}: ${message}`;
@@ -121,9 +119,7 @@ function validateCoordinates(x, y) {
     return {x, y};
 }
 
-/**
- * Draw the grid and obstacles
- */
+// Draw the grid and obstacles
 function drawGrid() {
     // Clear canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -148,9 +144,7 @@ function drawGrid() {
     });
 }
 
-/**
- * Draw the robots on the grid
- */
+// Draw the robots on the grid
 function drawRobots() {
     // Color per robot
     const robotColors = {
@@ -163,7 +157,7 @@ function drawRobots() {
     for (const id in robots) {
         const robot = robots[id];
         if (robot && robot.msg && robot.msg.location) {
-            // Get coordinates
+            
             const { x, y } = robot.msg.location;
 
             // Convert coordinates for grid
@@ -185,9 +179,7 @@ function drawRobots() {
     }
 }
 
-/**
- * Update the entire field
- */
+// Update the entire field
 function updateField() {
     drawGrid();
     drawRobots();
@@ -216,9 +208,7 @@ async function fetchRobots() {
     }
 }
 
-/** 
- * Fetch queue information from server 
- */
+// Fetch queue information from server 
 async function fetchQueues() {
     try {
         const res = await fetch(`${API_BASE}/queues`);
@@ -236,9 +226,7 @@ async function fetchQueues() {
     }
 }
 
-/**
- * Fetch emergency stop status from server
- */
+// Fetch emergency stop status from server
 async function fetchEmergencyStatus() {
     try {
         const res = await fetch(`${API_BASE}/emergency_status`);
@@ -262,9 +250,7 @@ async function fetchEmergencyStatus() {
     }
 }
 
-/**
- * Send emergency stop command
- */
+// Send emergency stop command
 function sendStop() {
     // Visual feedback
     document.querySelector('.stop-btn').classList.add('active-stop');
@@ -293,11 +279,8 @@ function sendStop() {
     });
 }
 
-/**
- * Resume after emergency stop
- */
+// Resume system after emergency stop button hasb enen pressed
 function sendResume() {
-    // Visual feedback
     document.querySelector('.stop-btn').classList.remove('active-stop');
     
     fetch(`${API_BASE}/resume`, {
@@ -324,9 +307,7 @@ function sendResume() {
     });
 }
 
-/**
- * Send movement command
- */
+// Send moevment command
 function sendMove() {
     // If emergency stop is active, don't allow movement
     if (emergencyActive) {
@@ -402,9 +383,7 @@ function sendMove() {
     });
 }
 
-/**
- * Clear the command queue for a robot
- */
+// Clear the comadnad queue for a robot
 function clearQueue() {
     // Get the selected robot ID
     const robotId = document.getElementById('unitId').value;
@@ -435,9 +414,7 @@ function clearQueue() {
     });
 }
 
-/**
- * Update the queue display with robot queues
- */
+// Update the queue display with robot queues
 function updateQueueDisplay() {
     const queueContent = document.getElementById('queue-content');
     if (!queueContent) return;
@@ -517,16 +494,14 @@ function updateQueueDisplay() {
             queueDiv.innerHTML = '<p class="empty-queue"><i class="fas fa-inbox"></i> No commands in queue</p>';
         }
         
-        // Assemble robot queue and add to container
+        // Assemble robot queue add add to container
         robotQueue.appendChild(header);
         robotQueue.appendChild(queueDiv);
         queueContent.appendChild(robotQueue);
     });
 }
 
-/**
- * Update the "last action" status
- */
+// Update the "last action" status
 function updateLastAction(action) {
     lastActionEl.textContent = action;
     

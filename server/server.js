@@ -1,12 +1,12 @@
 /**
- * Connected Systems Node.js Server
+ * Connected Systems Server
  *
  * Deze server:
  * - Verbindt met MQTT broker en abonneert op robot/status
- * - Biedt REST endpoints voor dashboard communicatie
- * - Stuurt commando's naar robots via MQTT robot/command
- * - Houdt robotstatussen bij in memory
- * - Beheert wachtrijen voor robotcommando's
+ * - Bied REST endpoints voor dashboard communicatie
+ * - Stuurt commandos naar robots via MQTT robot/command
+ * - Houd robotstatussen bij in memory
+ * - Beheert queues voor robotcommandos
  */
 
 const express = require('express');
@@ -19,10 +19,10 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-// In-memory opslag van robotstatussen
+// In memory opslag van robotstatussen
 let robotData = {};
 
-// In-memory opslag van robotwachtrijen
+// In memory opslag van robotwachtrijen
 let robotQueues = {
     'bot1': [],
     'bot2': [],
@@ -112,7 +112,7 @@ function processQueue(robotId) {
         return;
     }
     
-    // Stuur de eerste opdracht in de wachtrij
+    // Stuur de eerste opdracht in de queue
     const nextCommand = robotQueues[robotId][0];
     nextCommand.status = 'active';
     
@@ -340,7 +340,7 @@ setInterval(() => {
             processQueue(robotId);
         });
     }
-}, 1000); // Every second
+}, 1000); // 1000 ms dus elke seconde
 
 // Start de server op poort 5001
 const PORT = 5001;
@@ -348,7 +348,7 @@ app.listen(PORT, () => {
     log('INFO', `Node.js server running on port ${PORT}`);
 });
 
-// shutdown
+// shutdown de server
 process.on('SIGINT', () => {
     log('INFO', 'Server shutting down...');
     if (client) {

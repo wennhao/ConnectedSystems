@@ -2,31 +2,16 @@
 
 ## Table of contents
 - [Introduction](#introduction)
-- [Architecture Overview](#architecture-overview)
-- [Message Specifications](#message-specifications)
-- [Command Handling](#command-handling)
-- [Collision Management](#collision-management)
-- [System Interfaces](#system-interfaces)
-- [Error Handling](#error-handling)
-- [Security Considerations](#security-considerations)
-- [Version Management](#version-management)
+- [Message specifications](#message-specifications)
+- [Command handling](#command-handling)
+- [Collision management](#collision-management)
+- [System interfaces](#system-interfaces)
+
 
 ## Introduction
-This protocol governs communication between robots, control servers, and user interfaces in the Connected Systems platform. It combines MQTT for real-time messaging and REST for dashboard interactions, enabling reliable coordination of autonomous robots in shared environments.
+This document is used to agree upon how the robots and their digital twins in webots communicate with eachother
 
-## Architecture overview
-
-┌─────────────┐         MQTT       ┌────────────┐        REST      ┌────────────┐
-│ Robots      │◄───────────────────│   Server   │◄─────────────────│ Dashboard  │
-└─────────────┘                    └────────────┘                  └────────────┘
-
-
-### Component Responsibilities
-- **Robots**: Execute movement commands, detect obstacles, report status
-- **Server**: Coordinate robot actions, manage command queues, process status updates
-- **Dashboard**: Visualize robot positions, send commands, monitor system status
-
-## Message Specifications
+## Message specifications
 
 ### Core structure
 {
@@ -52,17 +37,11 @@ This protocol governs communication between robots, control servers, and user in
 }
 }
 
-## Message Sequence Example
+## Message sequence example
 Dashboard -> Server: POST /api/command {target coordinates}
 Server -> Robot: MQTT "robot/command" topic
 Robot -> Server: MQTT "robot/status" updates
 Server -> Dashboard: WebSocket updates
-
-## Error handling workflow
-1. Invalid command detection
-2. Error message generation
-3. Queue cleanup procedure
-4. Recovery mechanism
 
 ### Command types
 
@@ -87,17 +66,13 @@ Server → All Robots: MQTT "robot/command" topic (EMERGENCY_STOP)
 Robots → Server: MQTT "robot/status" (emergency:true)
 Server → Dashboard: Emergency status via polling
 
-## Command Handling
+## Command handling
 
 ### Processing workflow
 1. Command received via `robot/command` topic
 2. Validation check (coordinates within 0.0-0.9 range)
 3. Queue insertion (maximum 3 commands per robot)
 4. Sequential execution with status verification
-
-### Pseudo-code example
-if current_position == target_position:
-process_next_command()
 
 ### Priority system
 - First-In-First-Out (FIFO) processing
@@ -111,7 +86,7 @@ process_next_command()
 - Queue status visible in dashboard
 - Command states: pending, active, completed, error
 
-## Collision Management
+## Collision management
 
 ### Avoidance strategy
 1. **Position sharing**: Broadcast updates every 500ms
@@ -129,22 +104,13 @@ predicted_y = current_y + (velocity_y * time_delta)
 4. Update new route through modified Dijkstra's algorithm
 5. If no path found, wait until higher-priority robot passes
 
-### Deadlock prevention
-- Timeout-based resolution (5 seconds maximum wait)
-- Priority inversion prevention
-- Server-side monitoring of potential deadlocks
-
 ## System interfaces
 
 ### MQTT Endpoints
-| Endpoint         | Direction       | QoS | Description                     | Frequency    |
-|------------------|-----------------|-----|----------------------------------|--------------|
-| robot/status     | Robots → Server | 1   | Continuous position updates     | 500ms        |
-| robot/command    | Server → Robots | 2   | Critical control instructions   | On-demand    |
-
-### QoS levels explained
-- QoS 1 for status: Ensures delivery while minimizing overhead
-- QoS 2 for commands: Guarantees exactly-once delivery for critical instructions
+| Endpoint         | Direction       | Description                     | Frequency    |
+|------------------|-----------------|---------------------------------|--------------|
+| robot/status     | Robots → Server | Continuous position updates     | 500ms        |
+| robot/command    | Server → Robots | Critical control instructions   | On-demand    |
 
 ### REST API Endpoints
 
@@ -177,38 +143,7 @@ Content-Type: application/json
 "message": "X value exceeds maximum allowed range"
 }
 
-## Error handling
-
-### Error workflow
-1. **Detection**: Validate commands and states
-2. **Notification**: Generate appropriate error responses
-3. **Recovery**: Implement fallback procedures
-4. **Logging**: Record errors for troubleshooting
-
-### Common error types
-| Error Code           | Description                       | Recovery Action                  |
-|----------------------|-----------------------------------|----------------------------------|
-| INVALID_COORDINATES  | Coordinates out of range          | Use closest valid coordinates    |
-| QUEUE_FULL           | Command queue at capacity         | Wait and retry                   |
-| PATH_BLOCKED         | No valid path to destination      | Find alternative route           |
-| COMMUNICATION_ERROR  | MQTT connection failure           | Implement automatic reconnection |
-
-## Security considerations
-
 ### Communication security
 - MQTT broker authentication (not implemented in test environment)
 - TLS encryption recommended for production
 - Input validation on all endpoints
-
-### Access control
-- Dashboard authentication for production environments
-- Command validation before execution
-- Rate limiting for API endpoints
-
-## Version management
-
-### Protocol versioning
-- Current version: 1.0
-- Version field required in all messages
-- Backward compatibility maintained for minor version changes
-- Major version changes may require system updates

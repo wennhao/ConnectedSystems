@@ -40,12 +40,12 @@ except Exception as e:
 STEP_SIZE = 0.1 
 OBSTACLE_THRESHOLD = 400  
 MIN_BOUND, MAX_BOUND = 0.0, 0.9
-START_POS = [0.0, 0.0, 0.0]  
+START_POS = [0.0, 0.0, 0.0]  # verander dit voor elke bot
 ROBOT_SAFETY_MARGIN = 2  
 PREDICTION_STEPS = 3 
 ROBOT_PROXIMITY_THRESHOLD = 0.25
 
-#  Griddefinitie (1 = pad, 0 = muur) 
+#  Gridlayout (1 = pad, 0 = muur) 
 GRID = [
     [1,1,1,1,1,1,1,1,1,1],
     [1,0,0,0,1,1,0,0,0,1],
@@ -124,13 +124,7 @@ except Exception as e:
 
 #  Validatiefuncties 
 def validate_coordinates(x, y):
-    """
-    Valideer en corrigeer coördinaten:
-    - Omzetten naar positieve waarden
-    - Binnen grenzen houden
-    - Afronden op 1 decimaal voor consistentancy
-    """
-    # Coördinaten nooit negatief
+    # Coordinaten nooit negatief
     x = abs(x)
     y = abs(y)
     
@@ -142,7 +136,7 @@ def validate_coordinates(x, y):
     x = round(x, 1)
     y = round(y, 1)
     
-    logger.debug("Coördinaten gevalideerd: (%f, %f) -> (%f, %f)", x, y, x, y)
+    logger.debug("Coordinaten gevalideerd: (%f, %f) -> (%f, %f)", x, y, x, y)
     return x, y
 
 #  MQTT verbinding opzetten 
@@ -157,10 +151,6 @@ except Exception as e:
 
 #  Voorrangssysteem voor botsingsvermijding 
 def should_yield_to_robot(my_id, other_id):
-    """
-    Eenvoudig voorrangssysteem om deadlocks te voorkomen.
-    Robots met "lagere" ID's krijgen voorrang (bijv. bot1 > bot2 > bot3).
-    """
     return my_id > other_id
 
 #  MQTT statusverwerking functie 
@@ -191,12 +181,6 @@ def on_status(client, userdata, msg):
 
 #  MQTT commando verwerking functie 
 def on_command(client, userdata, msg):
-    """
-    Verwerk inkomende MQTT commando's:
-    - EMERGENCY_STOP: Zet noodstop aan
-    - RESUME: Zet noodstop uit
-    - MOVE: Verplaats naar nieuwe positie (als er geen noodstop actief is)
-    """
     global TARGET_POS, emergency_stop, LAST_TARGET_POS, path_cache
     
     try:
@@ -253,7 +237,7 @@ def on_command(client, userdata, msg):
                 target_pos = msg_content.get("target")
                 if target_pos and "x" in target_pos and "y" in target_pos:
                     try:
-                        # Valideer doelcoördinaten
+                        # Valideer doelCoordinaten
                         x = float(target_pos["x"])
                         y = float(target_pos["y"])
                         x, y = validate_coordinates(x, y)
@@ -262,7 +246,7 @@ def on_command(client, userdata, msg):
                         # Leeg pad cache bij wijziging van doel
                         path_cache = []
                     except ValueError as ve:
-                        logger.error("Ongeldige coördinaten in MOVE commando: %s", ve)
+                        logger.error("Ongeldige Coordinaten in MOVE commando: %s", ve)
     except json.JSONDecodeError as je:
         logger.error("Ongeldig JSON formaat in MQTT bericht: %s", je)
     except Exception as e:
@@ -282,10 +266,6 @@ last_sent_position = None
 
 #  Detecteer obstakels met sensoren 
 def detect_obstacles():
-    """
-    Lees sensorwaarden en bepaal in welke richtingen obstakels zijn.
-    Geeft een lijst terug met richting ("N", "E", "S", "W") voor elke geblokkeerde richting.
-    """
     try:
         obstacles = []
         # Lees sensorwaarden
@@ -324,10 +304,6 @@ def turn_leds_off():
 
 #  Stuur status via MQTT 
 def send_status():
-    """
-    Stuur de huidige robotstatus naar de MQTT broker.
-    Verstuurt alleen als de positie is veranderd sinds laatste keer.
-    """
     global last_sent_position
     
     if not mqtt_connected:
@@ -371,10 +347,6 @@ def send_status():
 
 #  Stel positie in 
 def set_position(x, y):
-    """
-    Stel de positie van de robot in.
-    Valideert coördinaten en houdt de robot binnen de grenzen.
-    """
     try:
         # Valideer en rond af
         new_x = round(x, 1)
@@ -448,10 +420,10 @@ def mark_robot_obstacles(grid, other_robot_positions):
     # Markeer cellen met andere robots als obstakels
     if other_robot_positions:
         for robot_id, pos_data in other_robot_positions.items():
-            # Zet wereldcoördinaten om naar grid
+            # Zet wereldcoordinaten om naar grid
             rx, ry = world_to_grid(pos_data["x"], pos_data["y"])
             
-            # Controleer of coördinaten binnen grid vallen
+            # Controleer of coordinaten binnen grid vallen
             if 0 <= rx < GRID_WIDTH and 0 <= ry < GRID_HEIGHT:
                 # Voeg een veiligheidsmarge toe rond robots
                 for dx in range(-ROBOT_SAFETY_MARGIN, ROBOT_SAFETY_MARGIN + 1):
@@ -468,10 +440,6 @@ def mark_robot_obstacles(grid, other_robot_positions):
 
 #  Voorspel toekomstige robotposities 
 def predict_robot_positions(robot_positions, prediction_steps=PREDICTION_STEPS):
-    """
-    Voorspel toekomstige posities van robots op basis van recente bewegingen
-    Helpt botsingen met bewegende robots te vermijden
-    """
     # Als we nog geen historische gegevens hebben, retourneer alleen huidige posities
     if not hasattr(predict_robot_positions, "history"):
         predict_robot_positions.history = {}
@@ -508,7 +476,7 @@ def predict_robot_positions(robot_positions, prediction_steps=PREDICTION_STEPS):
                     future_x = current_x + dx * step
                     future_y = current_y + dy * step
                     
-                    # Zorg voor geldige coördinaten
+                    # Zorg voor geldige coordinaten
                     future_x = min(max(future_x, 0.0), 0.9)
                     future_y = min(max(future_y, 0.0), 0.9)
                     
@@ -527,10 +495,6 @@ def predict_robot_positions(robot_positions, prediction_steps=PREDICTION_STEPS):
 
 #  Dijkstra padzoekalgoritme met robotvermijding 
 def dijkstra(grid, start, goal, other_robot_positions=None):
-    """
-    Vind het kortste pad met Dijkstra's algoritme
-    Beschouwt andere robots als obstakels
-    """
     # Haal grid met gemarkeerde robotobstakels indien nodig
     if other_robot_positions:
         temp_grid = mark_robot_obstacles(grid, other_robot_positions)
@@ -628,10 +592,6 @@ path_cache = []
 
 #  Beweeg naar doel met botsingsvermijding 
 def move_to_target():
-    """
-    Gebruik Dijkstra padplanning om stap voor stap naar de doelpositie te bewegen.
-    Vermijdt andere robots als dynamische obstakels.
-    """
     global path_cache
     
     if emergency_stop:
