@@ -1,0 +1,19 @@
+FROM node:18-alpine
+
+# Werkmap instellen
+WORKDIR /app
+
+# Kopieer afhankelijkheden
+COPY package.json package-lock.json* ./
+
+# Installeer dependencies
+RUN npm install
+
+# Kopieer applicatiecode
+COPY . .
+
+# Poort 5001 exposeren
+EXPOSE 5001
+
+# Start server
+CMD ["npm", "start"]

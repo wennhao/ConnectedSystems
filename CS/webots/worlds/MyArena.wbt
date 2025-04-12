@@ -1,0 +1,409 @@
+#VRML_SIM R2025a utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/floors/protos/RectangleArena.proto"
+
+WorldInfo {
+  basicTimeStep 30
+}
+Viewpoint {
+  orientation -0.23745133022295428 0.016475363149004232 0.9712597120155133 3.0070279432787337
+  position 1.7827086182946186 0.06858335920757655 0.7126335254224871
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  translation 0.45 0.45 0
+  floorTileSize 0.2 0.2
+}
+Solid {
+  translation 0.2 0.1 0.05
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+        }
+        texture ImageTexture {
+          url [
+            "https://www.shutterstock.com/image-vector/silver-corrugated-iron-sheets-seamless-600nw-2234382849.jpg"
+          ]
+        }
+      }
+      geometry Box {
+        size 0.3 0.1 0.1
+      }
+    }
+  ]
+  boundingObject Box {
+    size 0.3 0.1 0.1
+  }
+  physics Physics {
+    mass 10
+  }
+  locked TRUE
+}
+Solid {
+  translation 0.7 0.1 0.05
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+        }
+        texture ImageTexture {
+          url [
+            "https://www.shutterstock.com/image-vector/silver-corrugated-iron-sheets-seamless-600nw-2234382849.jpg"
+          ]
+        }
+      }
+      geometry Box {
+        size 0.3 0.1 0.1
+      }
+    }
+  ]
+  name "solid(4)"
+  boundingObject Box {
+    size 0.3 0.1 0.1
+  }
+  physics Physics {
+  }
+  locked TRUE
+}
+Solid {
+  translation 0.2 0.3 0.05
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+        }
+        texture ImageTexture {
+          url [
+            "https://www.shutterstock.com/image-vector/silver-corrugated-iron-sheets-seamless-600nw-2234382849.jpg"
+          ]
+        }
+      }
+      geometry Box {
+        size 0.3 0.1 0.1
+      }
+    }
+  ]
+  name "solid(1)"
+  boundingObject Box {
+    size 0.3 0.1 0.1
+  }
+  physics Physics {
+  }
+  locked TRUE
+}
+Solid {
+  translation 0.7 0.3 0.05
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+        }
+        texture ImageTexture {
+          url [
+            "https://www.shutterstock.com/image-vector/silver-corrugated-iron-sheets-seamless-600nw-2234382849.jpg"
+          ]
+        }
+      }
+      geometry Box {
+        size 0.3 0.1 0.1
+      }
+    }
+  ]
+  name "solid(5)"
+  boundingObject Box {
+    size 0.3 0.1 0.1
+  }
+  physics Physics {
+  }
+  locked TRUE
+}
+Solid {
+  translation 0.2 0.6 0.05
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+        }
+        texture ImageTexture {
+          url [
+            "https://www.shutterstock.com/image-vector/silver-corrugated-iron-sheets-seamless-600nw-2234382849.jpg"
+          ]
+        }
+      }
+      geometry Box {
+        size 0.3 0.1 0.1
+      }
+    }
+  ]
+  name "solid(2)"
+  boundingObject Box {
+    size 0.3 0.1 0.1
+  }
+  physics Physics {
+  }
+  locked TRUE
+}
+Solid {
+  translation 0.7 0.6 0.05
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+        }
+        texture ImageTexture {
+          url [
+            "https://www.shutterstock.com/image-vector/silver-corrugated-iron-sheets-seamless-600nw-2234382849.jpg"
+          ]
+        }
+      }
+      geometry Box {
+        size 0.3 0.1 0.1
+      }
+    }
+  ]
+  name "solid(6)"
+  boundingObject Box {
+    size 0.3 0.1 0.1
+  }
+  physics Physics {
+  }
+  locked TRUE
+}
+Solid {
+  translation 0.2 0.8 0.05
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+        }
+        texture ImageTexture {
+          url [
+            "https://www.shutterstock.com/image-vector/silver-corrugated-iron-sheets-seamless-600nw-2234382849.jpg"
+          ]
+        }
+      }
+      geometry Box {
+        size 0.3 0.1 0.1
+      }
+    }
+  ]
+  name "solid(3)"
+  boundingObject Box {
+    size 0.3 0.1 0.1
+  }
+  physics Physics {
+  }
+  locked TRUE
+}
+Solid {
+  translation 0.7 0.8 0.05
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+        }
+        texture ImageTexture {
+          url [
+            "https://www.shutterstock.com/image-vector/silver-corrugated-iron-sheets-seamless-600nw-2234382849.jpg"
+          ]
+        }
+      }
+      geometry Box {
+        size 0.3 0.1 0.1
+      }
+    }
+  ]
+  name "solid(7)"
+  boundingObject Box {
+    size 0.3 0.1 0.1
+  }
+  physics Physics {
+  }
+  locked TRUE
+}
+DEF myRobot Robot {
+  translation 0.9 0 0.01
+  children [
+    DEF RED LED {
+      translation 0 0.03 0.05
+      children [
+        PointLight {
+          attenuation 0 0 1
+          color 0 0 0
+          intensity 0.3
+          location 0 0.3 0
+          on FALSE
+        }
+        Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 1 0 0
+            }
+          }
+          geometry Capsule {
+            height 0.001
+            radius 0.01
+          }
+        }
+      ]
+      name "RED"
+      boundingObject Capsule {
+        height 0.1
+        radius 0.02
+        subdivision 16
+      }
+    }
+    DEF BLUE LED {
+      translation 0.03 0 0.05
+      children [
+        PointLight {
+          attenuation 0 0 1
+          color 0 0 0
+          intensity 0.3
+          location 0 0.3 0
+          on FALSE
+        }
+        Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 0 0 1
+            }
+          }
+          geometry Capsule {
+            height 0.001
+            radius 0.01
+          }
+        }
+      ]
+      name "BLUE"
+      boundingObject Capsule {
+        height 0.1
+        radius 0.02
+        subdivision 16
+      }
+      color [
+        0 0 1
+      ]
+    }
+    DEF YELLOW LED {
+      translation 0 -0.03 0.05
+      children [
+        PointLight {
+          attenuation 0 0 1
+          color 0 0 0
+          location 0 0.3 0
+          on FALSE
+        }
+        Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 1 1 0
+            }
+          }
+          geometry Capsule {
+            height 0.001
+            radius 0.01
+          }
+        }
+      ]
+      name "YELLOW"
+      boundingObject Capsule {
+        height 0.1
+        radius 0.02
+        subdivision 16
+      }
+      color [
+        1 1 0
+      ]
+    }
+    DEF GREEN LED {
+      translation -0.03 0 0.05
+      children [
+        PointLight {
+          attenuation 0 0 1
+          color 0 0 0
+          location 0 0.3 0
+          on FALSE
+        }
+        Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 0 1 0
+            }
+          }
+          geometry Capsule {
+            height 0.001
+            radius 0.01
+          }
+        }
+      ]
+      name "GREEN"
+      boundingObject Capsule {
+        height 0.1
+        radius 0.02
+        subdivision 16
+      }
+      color [
+        0 1 0
+      ]
+    }
+    DEF DistanceSensor_W DistanceSensor {
+      translation -0.0399998 -9.38563e-08 0
+      rotation 0 0 1 -3.1415853071795863
+      name "DS_W"
+    }
+    DEF DistanceSensor_S DistanceSensor {
+      translation 0 -0.04 0
+      rotation 0 0 1 -1.5707953071795862
+      name "DS_S"
+    }
+    DEF DistanceSensor_E DistanceSensor {
+      translation 0.04 0 0
+      rotation 0 0 1 1.01503e-06
+      name "DS_E"
+    }
+    DEF DistanceSensor_N DistanceSensor {
+      translation 0 0.04 0
+      rotation 0 0 1 1.5708
+      name "DS_N"
+    }
+    Solid {
+      translation 0 0 0.02
+      children [
+        DEF RobotShape Shape {
+          appearance Appearance {
+            texture ImageTexture {
+              url [
+                "https://cdna.artstation.com/p/assets/images/images/008/568/086/large/daljit-singh-albheight.jpg?1513619379"
+              ]
+            }
+          }
+          geometry Box {
+            size 0.1 0.1 0.05
+          }
+        }
+      ]
+      boundingObject Shape {
+        geometry Box {
+          size 0.1 0.1 0.05
+        }
+      }
+      physics Physics {
+      }
+    }
+  ]
+  name "myRobot"
+  boundingObject Box {
+    size 0.1 0.1 0.05
+  }
+  physics Physics {
+  }
+  controller "basic_controller"
+  supervisor TRUE
+}

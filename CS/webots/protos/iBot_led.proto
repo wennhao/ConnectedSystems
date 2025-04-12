@@ -1,0 +1,27 @@
+PROTO LED [
+  field  SFString  name "LED"
+  field  MFColor  color [
+  1 0 0
+  ]
+  field  SFVec3f  translation 0 0 0
+]
+{
+  LED{
+    translation  IS  translation
+    children [
+      Shape {
+        appearance  Appearance {
+          material  Material {
+            diffuseColor  0.5  0.5  0.5
+          }
+        }
+        geometry  Capsule {
+          height  0.001
+          radius  0.01
+        }
+      }
+    ]
+    name IS name
+    color IS color
+  }
+}

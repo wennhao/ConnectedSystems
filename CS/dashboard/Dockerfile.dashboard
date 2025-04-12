@@ -1,0 +1,13 @@
+FROM nginx:alpine
+
+# Verwijder standaard nginx inhoud
+RUN rm -rf /usr/share/nginx/html/*
+
+# Kopieer dashboard bestanden
+COPY . /usr/share/nginx/html
+
+# Poort 80 exposeren voor HTTP
+EXPOSE 80
+
+# Start nginx
+CMD ["nginx", "-g", "daemon off;"]

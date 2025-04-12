@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iBot Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo-area">
+                <i class="fas fa-robot logo-icon"></i>
+                <h1>iBot Dashboard</h1>
+            </div>
+            <div class="status-bar">
+                <div class="status-item">
+                    <span class="label"><i class="fas fa-signal"></i> System status:</span>
+                    <span id="system-status" class="value">online</span>
+                </div>
+                <div class="status-item">
+                    <span class="label"><i class="fas fa-exclamation-triangle"></i> Emergency stop:</span>
+                    <span id="stop-status" class="value">inactive</span>
+                </div>
+                <div class="status-item">
+                    <span class="label"><i class="fas fa-history"></i> Last action:</span>
+                    <span id="last-action" class="value"></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="dashboard-container">
+            <div class="left-column">
+                <div class="panel controls-panel">
+                    <div class="panel-header">
+                        <h2><i class="fas fa-gamepad"></i> Robot controls</h2>
+                    </div>
+                    <div class="panel-content">
+                        <div class="control-group">
+                            <label for="unitId">Robot ID</label>
+                            <select id="unitId">
+                                <option value="bot1">bot1</option>
+                                <option value="bot2">bot2</option>
+                                <option value="bot3">bot3</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <label for="target">Goal (x,y)</label>
+                            <input type="text" id="target" placeholder="x,y (e.g. 5,5)">
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-btn" onclick="sendMove()">
+                                <i class="fas fa-map-marker-alt"></i> Send command
+                            </button>
+                            <button class="clear-btn" onclick="clearQueue()">
+                                <i class="fas fa-trash-alt"></i> Clear queue
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel emergency-panel">
+                    <div class="panel-header">
+                        <h2><i class="fas fa-shield-alt"></i> Security</h2>
+                    </div>
+                    <div class="panel-content centered">
+                        <button class="stop-btn" onclick="sendStop()">
+                            <i class="fas fa-hand-paper"></i> EMERGENCY STOP
+                        </button>
+                        <button class="resume-btn" onclick="sendResume()">
+                            <i class="fas fa-play-circle"></i> Resume
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-column">
+                <div class="panel map-panel">
+                    <div class="panel-header">
+                        <h2><i class="fas fa-map"></i> Mapping</h2>
+                    </div>
+                    <div class="panel-content centered">
+                        <canvas id="field" width="600" height="600"></canvas>
+                        <div class="canvas-legend">
+                            <div class="legend-item"><span class="color-box bot1"></span> Bot 1</div>
+                            <div class="legend-item"><span class="color-box bot2"></span> Bot 2</div>
+                            <div class="legend-item"><span class="color-box bot3"></span> Bot 3</div>
+                            <div class="legend-item"><span class="color-box obstacle"></span> Obstacle</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="queue-container">
+            <div class="panel queue-panel">
+                <div class="panel-header">
+                    <h2><i class="fas fa-list-ol"></i> Queues</h2>
+                </div>
+                <div class="panel-content">
+                    <div id="queue-content" class="queue-grid">
+                        <!-- Queue content will be dynamically populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>Connected Systems Project &copy; 2025 - Robot Control System</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
