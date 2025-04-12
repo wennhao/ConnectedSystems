@@ -4,9 +4,9 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+/* Kleuren aangepast na feedback */
 :root {
-  --primary-color: #3a7cec;
+  --primary-color: #3a7cec; /* camelCase mix */
   --primary-dark: #2866d4;
   --secondary-color: #4fe3c1;
   --danger-color: #ff3a3a;
@@ -311,10 +311,11 @@ canvas {
   gap: 20px;
 }
 
+/* Experimentele styling */
 .robot-queue {
   background: #fbfcfd;
   border-radius: 6px;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border-color) !important; /* Override nodig */
   overflow: hidden;
 }
 

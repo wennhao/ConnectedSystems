@@ -157,7 +157,7 @@ client.on('message', (topic, message) => {
             processQueue(sender);
         }
         
-        // Detail logging alleen bij significante wijzigingen
+        // Detail logging alleen bij belangrijke wijzigingen
         const location = data.data.msg && data.data.msg.location ?
             `(${data.data.msg.location.x}, ${data.data.msg.location.y})` : 'unknown';
         log('INFO', `Status received from ${sender}: position=${location}`);
@@ -166,9 +166,7 @@ client.on('message', (topic, message) => {
     }
 });
 
-/**
- * REST API Endpoints
- */
+// REST API Endpoints
 
 // GET /robots - Haal alle robotstatussen op
 app.get('/robots', (req, res) => {
@@ -180,7 +178,8 @@ app.get('/queues', (req, res) => {
     res.json(robotQueues);
 });
 
-// GET /emergency_status - Haal huidige noodstop status op
+// GET /emergency_status - Haal huidige noodstop status op 
+// TODO: Error handling verbeteren
 app.get('/emergency_status', (req, res) => {
     res.json({ active: emergencyStopActive });
 });
@@ -199,8 +198,9 @@ app.post('/emergency_stop', (req, res) => {
         }
     };
 
-    // Verstuur 3x voor betrouwbaarheid
+    // Verstuur 3x voor zekerheid
     for (let i = 0; i < 3; i++) {
+        // Eerste implementatie zonder retries
         publishCommand(MQTT_TOPICS.COMMAND, command, (err) => {
             if (err) {
                 log('ERROR', `Attempt ${i+1}: Error sending emergency stop:`, err);
@@ -210,7 +210,7 @@ app.post('/emergency_stop', (req, res) => {
         });
     }
 
-    res.json({ status: "Emergency stop activated", active: true });
+    res.json({ status: "Emergency stop activated", active: true }); // Onzekere response
 });
 
 // POST /resume - Deactiveer noodstop
@@ -319,7 +319,7 @@ app.post('/clear_queue', (req, res) => {
     });
 });
 
-// Helper functie voor MQTT publiceren met foutafhandeling
+// Helper functie voor MQTT publiceren met errorhandling
 function publishCommand(topic, command, callback) {
     const payload = JSON.stringify(command);
     client.publish(topic, payload, (err) => {
@@ -348,7 +348,7 @@ app.listen(PORT, () => {
     log('INFO', `Node.js server running on port ${PORT}`);
 });
 
-// Graceful shutdown
+// shutdown
 process.on('SIGINT', () => {
     log('INFO', 'Server shutting down...');
     if (client) {

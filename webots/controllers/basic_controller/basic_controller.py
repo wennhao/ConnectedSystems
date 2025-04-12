@@ -18,7 +18,7 @@ import sys
 import heapq
 from controller import Supervisor  # type: ignore
 
-# --- Logging configuratie ---
+#  Logging configuratie 
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
@@ -26,7 +26,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger("RobotController")
 
-# --- Webots initialisatie ---
+#  Webots initialisatie 
 try:
     robot = Supervisor()
     supervisorNode = robot.getSelf()
@@ -36,16 +36,16 @@ except Exception as e:
     logger.error("Fout bij initialisatie van Webots robot: %s", e)
     sys.exit(1)
 
-# --- Constanten en configuratie ---
-STEP_SIZE = 0.1  # Beweegstap in Webots (0.1 per iteratie)
-OBSTACLE_THRESHOLD = 400  # Drempelwaarde voor obstakeldetectie
-MIN_BOUND, MAX_BOUND = 0.0, 0.9  # Bewegingsgrenzen in de Webots-wereld
-START_POS = [0.0, 0.0, 0.0]  # Startpositie [x, y, z]
-ROBOT_SAFETY_MARGIN = 2  # Veiligheidsafstand rond andere robots (in gridcellen)
-PREDICTION_STEPS = 3  # Aantal stappen vooruit voor robotbewegingsvoorspelling
-ROBOT_PROXIMITY_THRESHOLD = 0.25  # Drempelwaarde voor robotafstand bij voorrangsregeling
+# Configuratie
+STEP_SIZE = 0.1 
+OBSTACLE_THRESHOLD = 400  
+MIN_BOUND, MAX_BOUND = 0.0, 0.9
+START_POS = [0.0, 0.0, 0.0]  
+ROBOT_SAFETY_MARGIN = 2  
+PREDICTION_STEPS = 3 
+ROBOT_PROXIMITY_THRESHOLD = 0.25
 
-# --- Griddefinitie (1 = pad, 0 = muur) ---
+#  Griddefinitie (1 = pad, 0 = muur) 
 GRID = [
     [1,1,1,1,1,1,1,1,1,1],
     [1,0,0,0,1,1,0,0,0,1],
@@ -76,12 +76,12 @@ emergency_stop = False
 # Dictionary om informatie over andere robots bij te houden
 other_robots = {}
 
-# Robot ID (kan worden aangepast indien nodig)
+# Robot ID
 ROBOT_ID = "bot1"  # Verander dit naar "bot1", "bot2", of "bot3" voor verschillende robots
 
 logger.info("Configuratie: START_POS=%s, TARGET_POS=%s, ROBOT_ID=%s", START_POS, TARGET_POS, ROBOT_ID)
 
-# --- Positie en rotatie instellen ---
+#  Positie en rotatie instellen 
 try:
     trans = supervisorNode.getField("translation")
     rot = supervisorNode.getField("rotation")
@@ -92,14 +92,14 @@ except Exception as e:
     logger.error("Fout bij instellen positie/rotatie: %s", e)
     sys.exit(1)
 
-# --- MQTT instellingen ---
+#  MQTT instellingen 
 BROKER = "test.mosquitto.org"
 PORT = 1883
 TOPIC_PUBLISH = "robot/status"
 TOPIC_COMMAND = "robot/command"
 TOPIC_STATUS = "robot/status"  # Zelfde als publish topic
 
-# --- Sensoren en LEDs initialiseren ---
+#  Sensoren en LEDs initialiseren 
 try:
     # Sensoren
     sensor_N = robot.getDevice("DS_N")
@@ -122,13 +122,13 @@ except Exception as e:
     logger.error("Fout bij initialisatie sensoren/LED's: %s", e)
     sys.exit(1)
 
-# --- Validatiefuncties ---
+#  Validatiefuncties 
 def validate_coordinates(x, y):
     """
     Valideer en corrigeer coördinaten:
     - Omzetten naar positieve waarden
     - Binnen grenzen houden
-    - Afronden op 1 decimaal voor consistente stappen
+    - Afronden op 1 decimaal voor consistentancy
     """
     # Coördinaten nooit negatief
     x = abs(x)
@@ -145,7 +145,7 @@ def validate_coordinates(x, y):
     logger.debug("Coördinaten gevalideerd: (%f, %f) -> (%f, %f)", x, y, x, y)
     return x, y
 
-# --- MQTT verbinding opzetten ---
+#  MQTT verbinding opzetten 
 mqtt_connected = False
 try:
     client = mqtt.Client(client_id=f"WebotsRobot_{ROBOT_ID}_{int(time.time())}", protocol=mqtt.MQTTv311)
@@ -155,7 +155,7 @@ try:
 except Exception as e:
     logger.error("Fout bij verbinden met MQTT-broker: %s", e)
 
-# --- Voorrangssysteem voor botsingsvermijding ---
+#  Voorrangssysteem voor botsingsvermijding 
 def should_yield_to_robot(my_id, other_id):
     """
     Eenvoudig voorrangssysteem om deadlocks te voorkomen.
@@ -163,11 +163,9 @@ def should_yield_to_robot(my_id, other_id):
     """
     return my_id > other_id
 
-# --- MQTT statusverwerking functie ---
+#  MQTT statusverwerking functie 
 def on_status(client, userdata, msg):
-    """
-    Verwerk inkomende MQTT statusberichten van andere robots
-    """
+   # Verwerk inkomende MQTT statusberichten van andere robots
     global other_robots
     
     try:
@@ -191,7 +189,7 @@ def on_status(client, userdata, msg):
     except Exception as e:
         logger.error(f"Fout bij verwerken robotstatus: {e}")
 
-# --- MQTT commando verwerking functie ---
+#  MQTT commando verwerking functie 
 def on_command(client, userdata, msg):
     """
     Verwerk inkomende MQTT commando's:
@@ -282,7 +280,7 @@ if mqtt_connected:
 # Bijhouden van laatste verzonden positie
 last_sent_position = None
 
-# --- Detecteer obstakels met sensoren ---
+#  Detecteer obstakels met sensoren 
 def detect_obstacles():
     """
     Lees sensorwaarden en bepaal in welke richtingen obstakels zijn.
@@ -312,9 +310,9 @@ def detect_obstacles():
         logger.error("Fout bij obstakeldetectie: %s", e)
         return []
 
-# --- Schakel alle LEDs uit ---
+#  Schakel alle LEDs uit 
 def turn_leds_off():
-    """Schakel alle LED-indicators uit"""
+    # Schakel alle LED-indicators uit
     try:
         led_N.set(0)
         led_E.set(0)
@@ -324,7 +322,7 @@ def turn_leds_off():
     except Exception as e:
         logger.error("Fout bij uitschakelen LED's: %s", e)
 
-# --- Stuur status via MQTT ---
+#  Stuur status via MQTT 
 def send_status():
     """
     Stuur de huidige robotstatus naar de MQTT broker.
@@ -371,7 +369,7 @@ def send_status():
     except Exception as e:
         logger.error("Fout bij verzenden status: %s", e)
 
-# --- Stel positie in ---
+#  Stel positie in 
 def set_position(x, y):
     """
     Stel de positie van de robot in.
@@ -399,14 +397,13 @@ def set_position(x, y):
         logger.error("Fout bij instellen positie: %s", e)
         return False
 
-# --- Manhattan distance heuristic ---
+#  Manhattan distance heuristic 
 def heuristic(a, b):
-    """Manhattan distance heuristic voor A* padbepaling"""
     return abs(a[0] - b[0]) + abs(a[1] - b[1])
 
-# --- Zoek dichtsbijzijnde valide positie ---
+#  Zoek dichtsbijzijnde valide positie 
 def find_closest_valid_position(grid, pos):
-    """Vind de dichtstbijzijnde geldige positie in het grid"""
+    # Vind de dichtstbijzijnde geldige positie in het grid
     x, y = pos
     
     # Als de positie al geldig is, retourneer deze
@@ -429,22 +426,22 @@ def find_closest_valid_position(grid, pos):
     center_x, center_y = GRID_WIDTH // 2, GRID_HEIGHT // 2
     return (center_x, center_y)
 
-# --- World-grid coördinaatconversies ---
+#  World-grid coördinaatconversies 
 def world_to_grid(x, y):
-    """Zet Webots-positie om naar gridpositie"""
+    # Zet Webots-positie om naar gridpositie
     gx = int(round(x / STEP_SIZE))
     gy = GRID_HEIGHT - 1 - int(round(y / STEP_SIZE))  # omgekeerde Y-as
     return gx, gy
 
 def grid_to_world(gx, gy):
-    """Zet gridpositie om naar Webots-positie"""
+    # Zet gridpositie om naar Webots-positie
     x = round(gx * STEP_SIZE, 1)
     y = round((GRID_HEIGHT - 1 - gy) * STEP_SIZE, 1)
     return x, y
 
-# --- Markeer robot-obstakels op grid ---
+#  Markeer robot-obstakels op grid 
 def mark_robot_obstacles(grid, other_robot_positions):
-    """Markeer gridcellen die bezet zijn door andere robots en voeg veiligheidsmarges toe"""
+    # Markeer gridcellen die bezet zijn door andere robots en voeg veiligheidsmarges toe
     # Maak een tijdelijk grid
     temp_grid = [row[:] for row in grid]
     
@@ -469,11 +466,11 @@ def mark_robot_obstacles(grid, other_robot_positions):
     
     return temp_grid
 
-# --- Voorspel toekomstige robotposities ---
+#  Voorspel toekomstige robotposities 
 def predict_robot_positions(robot_positions, prediction_steps=PREDICTION_STEPS):
     """
     Voorspel toekomstige posities van robots op basis van recente bewegingen
-    Dit helpt botsingen met bewegende robots te vermijden
+    Helpt botsingen met bewegende robots te vermijden
     """
     # Als we nog geen historische gegevens hebben, retourneer alleen huidige posities
     if not hasattr(predict_robot_positions, "history"):
@@ -528,7 +525,7 @@ def predict_robot_positions(robot_positions, prediction_steps=PREDICTION_STEPS):
     combined.update(predicted_positions)
     return combined
 
-# --- Dijkstra padzoekalgoritme met robotvermijding ---
+#  Dijkstra padzoekalgoritme met robotvermijding 
 def dijkstra(grid, start, goal, other_robot_positions=None):
     """
     Vind het kortste pad met Dijkstra's algoritme
@@ -544,8 +541,9 @@ def dijkstra(grid, start, goal, other_robot_positions=None):
     if (0 <= start[0] < GRID_WIDTH and 0 <= start[1] < GRID_HEIGHT and 
         0 <= goal[0] < GRID_WIDTH and 0 <= goal[1] < GRID_HEIGHT):
         # Zorg ervoor dat start en doel niet als obstakels worden gemarkeerd
-        temp_grid[start[1]][start[0]] = 1
+        temp_grid[start[1]][start[0]] = 1  # y,x volgorde
         temp_grid[goal[1]][goal[0]] = 1
+
     
     # Setup voor A* algoritme (Dijkstra is A* met h=0)
     queue = []
@@ -605,7 +603,7 @@ def dijkstra(grid, start, goal, other_robot_positions=None):
                 return []  # Dit zou niet moeten gebeuren, maar voor de zekerheid
         
         path.reverse()
-        return path
+        return path # Werkt voor nu
     
     # Normale padreconstructie als pad bestaat
     path = []
@@ -625,10 +623,10 @@ def dijkstra(grid, start, goal, other_robot_positions=None):
     path.reverse()
     return path
 
-# --- Pad cache om huidig pad op te slaan ---
+#  Pad cache om huidig pad op te slaan 
 path_cache = []
 
-# --- Beweeg naar doel met botsingsvermijding ---
+#  Beweeg naar doel met botsingsvermijding 
 def move_to_target():
     """
     Gebruik Dijkstra padplanning om stap voor stap naar de doelpositie te bewegen.
@@ -763,7 +761,7 @@ def move_to_target():
         else:
             logger.error(f"Kan positie niet instellen op ({new_x}, {new_y})")
 
-# --- Hoofdlus ---
+#  Hoofdlus 
 logger.info("Simulatie gestart")
 last_movement_time = time.time()
 

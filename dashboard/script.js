@@ -193,15 +193,13 @@ function updateField() {
     drawRobots();
 }
 
-/**
- * Fetch robot data from server
- */
+// Soms werkt dit niet in Firefox
 async function fetchRobots() {
     try {
         const res = await fetch(`${API_BASE}/robots`);
-        if (res.ok) {
+        if (res.ok) { // Werkt dit altijd?
             const data = await res.json();
-            log('INFO', 'Received robot data:', data);
+            log('INFO', 'Received robot data:', data); // Debug log
             // Update robots object with new data
             robots = data;
             // Update the field

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="300mm"
+   height="199mm"
+   viewBox="0 0 300 199"
+   version="1.1"
+   preserveAspectRatio="xMidYMid meet"
+   id="svg8015"
+   sodipodi:docname="bot_2.svg"
+   inkscape:version="1.2 (dc2aeda, 2022-05-15)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs8019">
+    <rect
+       x="93.863252"
+       y="560.54783"
+       width="116.67114"
+       height="39.475199"
+       id="rect8677" />
+  </defs>
+  <sodipodi:namedview
+     id="namedview8017"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="1.1399562"
+     inkscape:cx="326.76693"
+     inkscape:cy="557.91615"
+     inkscape:window-width="1792"
+     inkscape:window-height="1092"
+     inkscape:window-x="0"
+     inkscape:window-y="28"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svgGroup" />
+  <g
+     id="svgGroup"
+     stroke-linecap="round"
+     fill-rule="evenodd"
+     font-size="9pt"
+     stroke="#000"
+     stroke-width="0.25mm"
+     fill="none"
+     style="stroke:#000;stroke-width:0.25mm;fill:none">
+    <path
+       d="M 0 111 L 0 141.313 L 4 141.313 L 4 168.688 L 0 168.688 L 0 196.063 L 0 199 L 35.313 199 L 35.313 195 L 62.688 195 L 62.688 199 L 90.063 199 L 98 199 L 98 168.688 L 94 168.688 L 94 141.313 L 98 141.313 L 98 113.938 L 98 111 L 62.688 111 L 62.688 115 L 35.313 115 L 35.313 111 L 7.938 111 L 0 111 Z"
+       id="front_outsideCutPath"
+       stroke="#FF0000"
+       stroke-width="0.1"
+       style="stroke:#FF0000;stroke-width:0.1"
+       vector-effect="non-scaling-stroke" />
+    <path
+       d="M 105 111 L 105 141.313 L 101 141.313 L 101 168.688 L 105 168.688 L 105 196.063 L 105 199 L 136.313 199 L 136.313 195 L 163.688 195 L 163.688 199 L 191.063 199 L 195 199 L 195 168.688 L 199 168.688 L 199 141.313 L 195 141.313 L 195 113.938 L 195 111 L 163.688 111 L 163.688 115 L 136.313 115 L 136.313 111 L 108.938 111 L 105 111 Z"
+       id="left_outsideCutPath"
+       stroke="#FF0000"
+       stroke-width="0.1"
+       style="stroke:#FF0000;stroke-width:0.1"
+       vector-effect="non-scaling-stroke" />
+    <path
+       d="M 206 105 L 206 136.313 L 202 136.313 L 202 163.688 L 206 163.688 L 206 191.063 L 206 195 L 237.313 195 L 237.313 199 L 264.688 199 L 264.688 195 L 292.063 195 L 296 195 L 296 163.688 L 300 163.688 L 300 136.313 L 296 136.313 L 296 108.938 L 296 105 L 264.688 105 L 264.688 101 L 237.313 101 L 237.313 105 L 209.938 105 L 206 105 Z"
+       id="top_outsideCutPath"
+       stroke="#FF0000"
+       stroke-width="0.1"
+       style="stroke:#FF0000;stroke-width:0.1"
+       vector-effect="non-scaling-stroke" />
+    <path
+       d="M 0 20 L 0 50.313 L 4 50.313 L 4 77.688 L 0 77.688 L 0 105.063 L 0 108 L 35.313 108 L 35.313 104 L 62.688 104 L 62.688 108 L 90.063 108 L 98 108 L 98 77.688 L 94 77.688 L 94 50.313 L 98 50.313 L 98 22.938 L 98 20 L 62.688 20 L 62.688 24 L 35.313 24 L 35.313 20 L 7.938 20 L 0 20 Z"
+       id="back_outsideCutPath"
+       stroke="#FF0000"
+       stroke-width="0.1"
+       style="stroke:#FF0000;stroke-width:0.1"
+       vector-effect="non-scaling-stroke" />
+    <path
+       d="M 105 20 L 105 50.313 L 101 50.313 L 101 77.688 L 105 77.688 L 105 105.063 L 105 108 L 136.313 108 L 136.313 104 L 163.688 104 L 163.688 108 L 191.063 108 L 195 108 L 195 77.688 L 199 77.688 L 199 50.313 L 195 50.313 L 195 22.938 L 195 20 L 163.688 20 L 163.688 24 L 136.313 24 L 136.313 20 L 108.938 20 L 105 20 Z"
+       id="right_outsideCutPath"
+       stroke="#FF0000"
+       stroke-width="0.1"
+       style="stroke:#FF0000;stroke-width:0.1"
+       vector-effect="non-scaling-stroke" />
+    <path
+       d="M 206 4 L 206 35.313 L 202 35.313 L 202 62.688 L 206 62.688 L 206 90.063 L 206 94 L 237.313 94 L 237.313 98 L 264.688 98 L 264.688 94 L 292.063 94 L 296 94 L 296 62.688 L 300 62.688 L 300 35.313 L 296 35.313 L 296 7.938 L 296 4 L 264.688 4 L 264.688 0 L 237.313 0 L 237.313 4 L 209.938 4 L 206 4 Z"
+       id="bottom_outsideCutPath"
+       stroke="#FF0000"
+       stroke-width="0.1"
+       style="stroke:#FF0000;stroke-width:0.1"
+       vector-effect="non-scaling-stroke" />
+    <circle
+       style="fill:none;stroke:#ff0000;stroke-width:0.0775176;stroke-opacity:1"
+       id="path8138"
+       cx="234"
+       cy="149"
+       r="3.9612412" />
+    <circle
+       style="fill:none;stroke:#ff0000;stroke-width:0.0775176;stroke-opacity:1"
+       id="path8138-2"
+       cx="269"
+       cy="149"
+       r="3.9612412" />
+    <circle
+       style="fill:none;stroke:#ff0000;stroke-width:0.0775176;stroke-opacity:1"
+       id="path8138-2-8"
+       cx="251.5"
+       cy="166.5"
+       r="3.9612412" />
+    <circle
+       style="fill:none;stroke:#ff0000;stroke-width:0.0775176;stroke-opacity:1"
+       id="path8138-2-8-5"
+       cx="251.5"
+       cy="131.5"
+       r="3.9612412" />
+    <rect
+       style="fill:none;stroke:#ff0000;stroke-width:0.1;stroke-opacity:1"
+       id="rect8673"
+       width="6"
+       height="6"
+       x="275.04999"
+       y="175.05" />
+    <text
+       xml:space="preserve"
+       transform="scale(0.26458333)"
+       id="text8675"
+       style="font-size:37.3333px;font-family:'Lilita One';-inkscape-font-specification:'Lilita One';white-space:pre;shape-inside:url(#rect8677);display:inline;fill:#777777;fill-opacity:1;stroke:none;stroke-width:0.377953;stroke-opacity:1" />
+    <text
+       xml:space="preserve"
+       style="font-size:9.87777px;font-family:'Lilita One';-inkscape-font-specification:'Lilita One';fill:#777777;fill-opacity:1;stroke:none;stroke-width:0.1;stroke-opacity:1"
+       x="39.506111"
+       y="157.0231"
+       id="text8886"><tspan
+         sodipodi:role="line"
+         id="tspan8884"
+         style="stroke-width:0.1"
+         x="39.506111"
+         y="157.0231">bot 2</tspan></text>
+  </g>
+</svg>
